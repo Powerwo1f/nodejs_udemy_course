@@ -5,7 +5,7 @@ const userFactory = require('../factories/user.factory');
 class CustomPage {
     static async build() {
         const browser = await puppeteer.launch({
-            headless: false,
+            headless: true,
         });
         const page = await browser.newPage();
         const customPage = new CustomPage(page);
@@ -33,6 +33,24 @@ class CustomPage {
 
     async getContentsOf(selector) {
         return this.page.$eval(selector, el => el.innerHTML);
+    }
+
+    execRequest(action, path, data = null) {
+        return this.page.evaluate((_action, _path, _data) => {
+            const options = {
+                method: _action,
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+
+            if (_action === 'POST') {
+                options.body = JSON.stringify(_data);
+            }
+
+            return fetch(_path, options).then(res => res.json());
+        }, action, path, data);
     }
 }
 
