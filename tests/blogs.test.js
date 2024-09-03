@@ -11,7 +11,7 @@ afterEach(async () => {
     await page.close();
 });
 
-describe('When logged in', async () => {
+describe('When logged in', () => {
 
     beforeEach(async () => {
         await page.login();
@@ -23,7 +23,7 @@ describe('When logged in', async () => {
         expect(label).toEqual('Blog Title');
     });
 
-    describe('And using valid inputs', async () => {
+    describe('And using valid inputs', () => {
         test('submitting takes user to review screen', async () => {
             await page.type('.title input', 'My Title');
             await page.type('.content input', 'My Content');
@@ -48,7 +48,7 @@ describe('When logged in', async () => {
         });
     });
 
-    describe('And using invalid inputs', async () => {
+    describe('And using invalid inputs', () => {
         beforeEach(async () => {
             await page.click('form button');
         });
@@ -62,7 +62,7 @@ describe('When logged in', async () => {
     });
 });
 
-describe('User is not logged in', async () => {
+describe('User is not logged in', () => {
     test('User cannot create blog posts', async () => {
        const result = await page.execRequest('POST', '/api/blogs', { title: 'My Title', content: 'My Content' });
 
