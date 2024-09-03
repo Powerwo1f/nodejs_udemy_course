@@ -1,4 +1,6 @@
 const Page = require('./helpers/page');
+require('../models/User');
+require('../models/Blog');
 
 let page;
 
