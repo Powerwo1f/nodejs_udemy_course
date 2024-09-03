@@ -15,6 +15,8 @@ mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+require('./models/User');
+require('./models/Blog');
 
 const app = express();
 
